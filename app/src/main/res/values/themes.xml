@@ -1,0 +1,20 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.SmartDisasterAlert" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="android:statusBarColor">@color/primary_dark</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:colorBackground">@color/background</item>
+    </style>
+
+    <style name="Theme.SmartDisasterAlert" parent="Base.Theme.SmartDisasterAlert" />
+
+    <style name="SOSButton" parent="Widget.Material3.Button.ElevatedButton">
+        <item name="backgroundTint">@color/sos_red</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="cornerRadius">28dp</item>
+        <item name="elevation">6dp</item>
+    </style>
+</resources>

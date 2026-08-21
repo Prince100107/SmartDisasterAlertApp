@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#1565C0</color>
+    <color name="primary_dark">#0D47A1</color>
+    <color name="primary_light">#E3F2FD</color>
+    <color name="secondary">#26A69A</color>
+    <color name="background">#F8F9FA</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="card_stroke">#E0E0E0</color>
+
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="text_hint">#9E9E9E</color>
+
+    <!-- Severity Colors -->
+    <color name="severity_high">#D32F2F</color>
+    <color name="severity_high_bg">#FFEBEE</color>
+    <color name="severity_medium">#F57C00</color>
+    <color name="severity_medium_bg">#FFF3E0</color>
+    <color name="severity_low">#388E3C</color>
+    <color name="severity_low_bg">#E8F5E9</color>
+
+    <!-- Disaster Type Colors -->
+    <color name="disaster_earthquake">#795548</color>
+    <color name="disaster_flood">#0288D1</color>
+    <color name="disaster_cyclone">#5C6BC0</color>
+    <color name="disaster_fire">#E64A19</color>
+    <color name="disaster_rain">#0097A7</color>
+    <color name="disaster_lightning">#F57F17</color>
+
+    <!-- SOS & Emergency -->
+    <color name="sos_red">#C62828</color>
+    <color name="sos_red_dark">#B71C1C</color>
+    <color name="sos_ripple">#FFCDD2</color>
+
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="divider">#EEEEEE</color>
+</resources>
