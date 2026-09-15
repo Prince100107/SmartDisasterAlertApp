@@ -23,17 +23,114 @@ A production-ready, native Android application engineered in **Kotlin** for real
 
 ---
 
-## 📱 Application Screenshots Showcase
+## 📸 Application Outputs (Screenshots)
 
-| 🏠 Home Dashboard | 📋 Live Disaster Alerts | 🗺️ Disaster Impact Zones |
+Below are the visual outputs captured directly from the live running application:
+
+### 🌟 Quick Output Gallery
+
+| 🏠 Output 1: Home Dashboard | 📋 Output 2: Live Disaster Alerts | 🗺️ Output 3: Impact Zones |
 |:---:|:---:|:---:|
-| <img src="screenshots/01_home_dashboard.png" width="260" alt="Home Dashboard" /> | <img src="screenshots/02_live_alerts.png" width="260" alt="Live Alerts" /> | <img src="screenshots/03_disaster_map_zones.png" width="260" alt="Disaster Impact Zones" /> |
+| <img src="screenshots/01_home_dashboard.png" width="260" alt="Output 1: Home Dashboard" /> | <img src="screenshots/02_live_alerts.png" width="260" alt="Output 2: Live Disaster Alerts" /> | <img src="screenshots/03_disaster_map_zones.png" width="260" alt="Output 3: Disaster Impact Zones" /> |
 | Real-time GPS location, weather, and critical alert stats | Categorized multi-hazard feed with severity filtering | Interactive disaster impact coordinates & Google Maps intents |
 
-| 📖 Safety & Preparedness | ⚙️ App Preferences | 🆘 Emergency SOS Center | 🔍 Alert Details |
+| 📖 Output 4: Safety & Preparedness | ⚙️ Output 5: App Preferences | 🆘 Output 6: Emergency SOS Center | 🔍 Output 7: Alert Details |
 |:---:|:---:|:---:|:---:|
-| <img src="screenshots/04_safety_tips.png" width="200" alt="Safety Guidelines" /> | <img src="screenshots/05_settings.png" width="200" alt="Settings & Notifications" /> | <img src="screenshots/06_emergency_sos.png" width="200" alt="Emergency SOS Center" /> | <img src="screenshots/07_disaster_details.png" width="200" alt="Alert Details Screen" /> |
+| <img src="screenshots/04_safety_tips.png" width="200" alt="Output 4: Safety Guidelines" /> | <img src="screenshots/05_settings.png" width="200" alt="Output 5: Settings & Notifications" /> | <img src="screenshots/06_emergency_sos.png" width="200" alt="Output 6: Emergency SOS Center" /> | <img src="screenshots/07_disaster_details.png" width="200" alt="Output 7: Alert Details Screen" /> |
 | Actionable survival checklists for 6 disaster categories | Custom severity thresholds and notification toggles | Instant 1-tap emergency dialer (112, 1070) & GPS SMS | In-depth casualty report, guidelines & navigation link |
+
+---
+
+### 🔍 Detailed Output Breakdown
+
+#### 🏠 Output 1: Home Dashboard Screen
+<p align="center">
+  <img src="screenshots/01_home_dashboard.png" width="340" alt="Output 1: Home Dashboard" />
+</p>
+
+* **Location Card**: Automatically detects the user's live physical location using `FusedLocationProviderClient` and displays the reverse-geocoded city and state with latitude/longitude coordinates and a manual refresh trigger.
+* **Current Weather Status Card**: Displays live meteorological conditions (skies, temperature in °C, wind velocity in km/h, and rainfall accumulation) fetched dynamically via Open-Meteo REST API.
+* **Real-time KPI Counters**: Visual summary counters showcasing the number of **Active Alerts** and **Critical Events** requiring immediate attention.
+* **Recent Active Alerts**: Scrollable card feed of the latest urgent regional hazards with severity indicators and timestamps.
+* **Persistent SOS Action**: Prominent high-contrast red floating button for immediate crisis assistance.
+
+---
+
+#### 📋 Output 2: Live Disaster Alerts & Multi-Hazard Filter
+<p align="center">
+  <img src="screenshots/02_live_alerts.png" width="340" alt="Output 2: Live Disaster Alerts" />
+</p>
+
+* **Category Filter Chips**: Single-tap filtering across hazard domains including **All Alerts**, **Earthquake**, **Heavy Rain**, **Flood**, **Cyclone**, and **Wildfire**.
+* **Severity Badging**: Normalized, color-coded status badges (**CRITICAL**, **HIGH**, **MEDIUM**, **LOW**) allowing users to instantly gauge risk levels.
+* **USGS Live Feeds**: Directly parses real-time seismic events with magnitude, focal depth, epicenter locality, and reporting timestamp.
+* **Interactive Navigation**: Tapping any alert card opens the in-depth incident report.
+
+---
+
+#### 🗺️ Output 3: Disaster Impact Zones & Live Coordinates
+<p align="center">
+  <img src="screenshots/03_disaster_map_zones.png" width="340" alt="Output 3: Disaster Impact Zones" />
+</p>
+
+* **Geographic Spatial Monitoring**: Pinpoints affected disaster centers with exact decimal latitude and longitude coordinates.
+* **Google Maps Navigation Integration**: Direct implicit intent integration (`geo:lat,lon?q=...`) allowing users to launch Google Maps for evacuation routes or distance estimation with a single tap.
+* **Impact Radius & Proximity Alert**: Clear visual indicators denoting distance from the epicenter and radius of severe impact.
+
+---
+
+#### 📖 Output 4: Disaster Safety & Preparedness Guidelines
+<p align="center">
+  <img src="screenshots/04_safety_tips.png" width="340" alt="Output 4: Safety & Preparedness" />
+</p>
+
+* **6 Comprehensive Hazard Modules**:
+  1. *Earthquake Preparedness*: Drop, Cover, and Hold On protocols.
+  2. *Flood Safety Guidelines*: Inundation survival and flash flood precautions.
+  3. *Cyclone & Hurricane Protection*: High wind barriers and storm surge defense.
+  4. *Wildfire & Structural Fire*: Defensible space and evacuation rules.
+  5. *Thunderstorm & Lightning Safety*: The 30-30 Rule and electrical surge mitigation.
+  6. *Heavy Rain & Urban Inundation*: Safe transit and drainage safeguards.
+* **Offline Availability**: All life-saving instructions are permanently accessible without requiring active internet connectivity.
+
+---
+
+#### ⚙️ Output 5: Application Settings & User Preferences
+<p align="center">
+  <img src="screenshots/05_settings.png" width="340" alt="Output 5: App Settings" />
+</p>
+
+* **Persistent Storage**: Utilizes Android `SharedPreferences` to preserve user configuration across app reboots.
+* **Push Notification Toggles**: Easily enable or mute background disaster warning notifications.
+* **Severity Threshold Radios**: Filter out lower-severity warnings by setting threshold to *Show All*, *Medium & Above*, or *High Severity Only*.
+* **Live Test Notification Trigger**: Generates an immediate simulated high-priority disaster notification through Android's `NotificationChannel`.
+
+---
+
+#### 🆘 Output 6: Instant Emergency SOS Action Center
+<p align="center">
+  <img src="screenshots/06_emergency_sos.png" width="340" alt="Output 6: Emergency SOS Center" />
+</p>
+
+* **1-Tap Direct National Helplines**:
+  * 🚨 **112**: National Unified Emergency Helpline
+  * 🌊 **1070**: State Disaster Management Authority
+  * 🚑 **108**: Emergency Medical Ambulance
+  * 👮 **100**: Police Department
+  * 🚒 **101**: Fire and Rescue Services
+* **Automated SOS SMS Dispatch**: Generates an emergency distress message containing current GPS coordinates and an instant Google Maps location link.
+* **Live Location Sharing**: Android Sharesheet integration to broadcast distress coordinates via WhatsApp, SMS, or Telegram.
+
+---
+
+#### 🔍 Output 7: Detailed Disaster Incident View
+<p align="center">
+  <img src="screenshots/07_disaster_details.png" width="340" alt="Output 7: Alert Details" />
+</p>
+
+* **Comprehensive Threat Profile**: Complete incident breakdown including epicenter location, coordinates, focal depth, affected radius, and timestamp.
+* **Actionable Emergency Guidance**: Specific safety measures tailored to the active threat severity.
+* **One-Tap Map & Helpline Actions**: Direct buttons to view epicenter on Google Maps, dial emergency authorities, or share the alert details with family.
 
 ---
 
