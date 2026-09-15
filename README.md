@@ -6,7 +6,7 @@
 [![Architecture](https://img.shields.io/badge/Architecture-MVVM%20%2B%20Repository-blue?style=for-the-badge)](https://developer.android.com/topic/architecture)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
-A production-ready, native Android application engineered in **Kotlin** for real-time disaster early-warnings, meteorological hazard tracking, location-based risk assessment, and rapid emergency response. Developed as a 1-month comprehensive capstone for the **Mobile Application Development (MAD)** curriculum.
+A production-ready, native Android application engineered in **Kotlin** for real-time disaster early-warnings, meteorological hazard tracking, location-based risk assessment, and rapid emergency response. Developed as a comprehensive capstone for the **Mobile Application Development (MAD)** curriculum.
 
 ---
 
@@ -18,7 +18,6 @@ A production-ready, native Android application engineered in **Kotlin** for real
 | **GitHub Profile** | [@Prince100107](https://github.com/Prince100107) |
 | **Enrollment Number** | **24012011120** |
 | **Course** | Mobile Application Development (MAD) |
-| **Project Duration** | 1 Month (Aug 16, 2026 – Sep 15, 2026) |
 | **Minimum SDK** | API 24 (Android 7.0 Nougat) |
 | **Target SDK** | API 36 (Android 15+) |
 
@@ -212,18 +211,6 @@ SmartDisasterAlertApp/
    * Connect your physical Android smartphone with USB debugging enabled, or start an Android Virtual Device (AVD).
    * Click the green **Run (▶)** button in Android Studio toolbar.
    * Grant location and notification permissions when prompted to enable real-time hazard detection for your region.
-
----
-
-## 📈 1-Month Development Journey
-
-This project was built over 1 month of structured, progressive iterations:
-
-* **Week 1 (Aug 16 – Aug 22)**: Project foundation, Gradle setup, Material 3 theming, core disaster models, and offline dataset.
-* **Week 2 (Aug 23 – Aug 29)**: Bottom navigation architecture, Home dashboard layout, RecyclerView adapters, and SOS floating action trigger.
-* **Week 3 (Aug 30 – Sep 05)**: Retrofit 2 REST API integration (USGS Earthquakes GeoJSON + Open-Meteo Weather) and Emergency Response Center.
-* **Week 4 (Sep 06 – Sep 12)**: GPS Location integration with `FusedLocationProviderClient`, Geocoding, Impact Zones, and Notification Channels.
-* **Final Polish (Sep 13 – Sep 15)**: Performance optimizations, ViewModel shared architecture stabilization, screenshot documentation, and production readiness.
 
 ---
 
