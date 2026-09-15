@@ -5,12 +5,16 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
-import android.os.Build
+import android.location.Location
+import android.location.LocationManager
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeoutOrNull
 import java.util.Locale
 import kotlin.coroutines.resume
 
@@ -25,41 +29,59 @@ class LocationHelper(private val context: Context) {
         return fine || coarse
     }
 
-    suspend fun getCurrentLocation(): Pair<Double, Double>? = suspendCancellableCoroutine { cont ->
+    suspend fun getCurrentLocation(): Pair<Double, Double>? = withTimeoutOrNull(4000L) {
         if (!hasLocationPermission()) {
-            cont.resume(null)
-            return@suspendCancellableCoroutine
+            return@withTimeoutOrNull null
         }
 
         try {
-            fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null)
-                .addOnSuccessListener { location ->
-                    if (location != null) {
-                        cont.resume(Pair(location.latitude, location.longitude))
-                    } else {
-                        // Fallback to last location
-                        fusedLocationClient.lastLocation.addOnSuccessListener { lastLoc ->
-                            if (lastLoc != null) {
-                                cont.resume(Pair(lastLoc.latitude, lastLoc.longitude))
-                            } else {
-                                cont.resume(null)
-                            }
-                        }.addOnFailureListener {
-                            cont.resume(null)
-                        }
-                    }
-                }
-                .addOnFailureListener {
+            // First try fast last location
+            val lastLoc = suspendCancellableCoroutine<Location?> { cont ->
+                try {
+                    fusedLocationClient.lastLocation
+                        .addOnSuccessListener { loc -> cont.resume(loc) }
+                        .addOnFailureListener { cont.resume(null) }
+                } catch (e: Exception) {
                     cont.resume(null)
                 }
-        } catch (e: SecurityException) {
-            cont.resume(null)
+            }
+
+            if (lastLoc != null) {
+                return@withTimeoutOrNull Pair(lastLoc.latitude, lastLoc.longitude)
+            }
+
+            // Fallback to system LocationManager (works offline without Google Play Services)
+            val locManager = context.getSystemService(Context.LOCATION_SERVICE) as? LocationManager
+            val gpsLoc = locManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+            val netLoc = locManager?.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+            val bestLoc = gpsLoc ?: netLoc
+
+            if (bestLoc != null) {
+                return@withTimeoutOrNull Pair(bestLoc.latitude, bestLoc.longitude)
+            }
+
+            // Otherwise try high accuracy request with timeout
+            suspendCancellableCoroutine<Pair<Double, Double>?> { cont ->
+                try {
+                    fusedLocationClient.getCurrentLocation(Priority.PRIORITY_BALANCED_POWER_ACCURACY, null)
+                        .addOnSuccessListener { loc ->
+                            if (loc != null) cont.resume(Pair(loc.latitude, loc.longitude))
+                            else cont.resume(null)
+                        }
+                        .addOnFailureListener { cont.resume(null) }
+                } catch (e: Exception) {
+                    cont.resume(null)
+                }
+            }
+        } catch (e: Exception) {
+            null
         }
     }
 
     fun getAddressFromCoordinates(latitude: Double, longitude: Double): String {
         return try {
             val geocoder = Geocoder(context, Locale.getDefault())
+            @Suppress("DEPRECATION")
             val addresses: List<Address>? = geocoder.getFromLocation(latitude, longitude, 1)
             if (!addresses.isNullOrEmpty()) {
                 val address = addresses[0]
@@ -68,12 +90,12 @@ class LocationHelper(private val context: Context) {
                 val country = address.countryName ?: ""
                 listOfNotNull(locality.ifEmpty { null }, adminArea.ifEmpty { null }, country.ifEmpty { null })
                     .joinToString(", ")
-                    .ifEmpty { "Lat: " + String.format("%.4f", latitude) + ", Lng: " + String.format("%.4f", longitude) }
+                    .ifEmpty { String.format("Lat: %.4f, Lng: %.4f", latitude, longitude) }
             } else {
-                "Lat: " + String.format("%.4f", latitude) + ", Lng: " + String.format("%.4f", longitude)
+                String.format("Lat: %.4f, Lng: %.4f", latitude, longitude)
             }
         } catch (e: Exception) {
-            "Lat: " + String.format("%.4f", latitude) + ", Lng: " + String.format("%.4f", longitude)
+            String.format("Lat: %.4f, Lng: %.4f", latitude, longitude)
         }
     }
 }

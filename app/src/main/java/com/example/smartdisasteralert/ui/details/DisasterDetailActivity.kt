@@ -2,6 +2,7 @@ package com.example.smartdisasteralert.ui.details
 
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -36,6 +37,7 @@ class DisasterDetailActivity : AppCompatActivity() {
         setupToolbar()
         populateDetails()
         setupActionButtons()
+        setupMapNavigation()
     }
 
     private fun setupToolbar() {
@@ -54,7 +56,7 @@ class DisasterDetailActivity : AppCompatActivity() {
         binding.tvDetailType.text = alert.type.displayName
         binding.tvDetailLocation.text = alert.locationName
         binding.tvDetailTime.text = DateTimeUtils.formatExactDateTime(alert.timestamp)
-        binding.tvDetailCoordinates.text = String.format("%.4f° N, %.4f° E", alert.latitude, alert.longitude)
+        binding.tvDetailCoordinates.text = String.format("Lat: %.4f, Lng: %.4f (Tap to Open Map)", alert.latitude, alert.longitude)
         binding.tvDetailSource.text = alert.source
         binding.tvDetailDescription.text = alert.description
         binding.tvDetailInstructions.text = alert.safetyInstructions
@@ -77,18 +79,13 @@ class DisasterDetailActivity : AppCompatActivity() {
 
         // Share Alert via Implicit Intent
         binding.btnShareAlert.setOnClickListener {
-            val shareText = """
-                ?? DISASTER ALERT: 
-                Location: 
-                Severity: 
-                Date/Time: 
-                Coordinates: https://maps.google.com/?q=,
-                
-                Safety Instructions:
-                
-                
-                Shared via Smart Disaster Alert App (MAD Project)
-            """.trimIndent()
+            val shareText = "DISASTER ALERT: " + alert.title + "\n" +
+                    "Location: " + alert.locationName + "\n" +
+                    "Severity: " + alert.severity.displayName + "\n" +
+                    "Time: " + DateTimeUtils.formatExactDateTime(alert.timestamp) + "\n" +
+                    "Map Coordinates: https://maps.google.com/?q=" + alert.latitude + "," + alert.longitude + "\n\n" +
+                    "Instructions:\n" + alert.safetyInstructions + "\n\n" +
+                    "Shared via Smart Disaster Alert App (MAD Project)"
 
             val sendIntent = Intent().apply {
                 action = Intent.ACTION_SEND
@@ -103,6 +100,20 @@ class DisasterDetailActivity : AppCompatActivity() {
         binding.btnEmergencyHelp.setOnClickListener {
             val bottomSheet = EmergencyBottomSheetDialog.newInstance(alert.latitude, alert.longitude)
             bottomSheet.show(supportFragmentManager, EmergencyBottomSheetDialog.TAG)
+        }
+    }
+
+    private fun setupMapNavigation() {
+        val alert = disasterAlert ?: return
+        binding.tvDetailCoordinates.setOnClickListener {
+            val geoUri = Uri.parse("geo:" + alert.latitude + "," + alert.longitude + "?q=" + alert.latitude + "," + alert.longitude + "(" + Uri.encode(alert.title) + ")")
+            val mapIntent = Intent(Intent.ACTION_VIEW, geoUri)
+            try {
+                startActivity(mapIntent)
+            } catch (e: Exception) {
+                val webUri = Uri.parse("https://maps.google.com/?q=" + alert.latitude + "," + alert.longitude)
+                startActivity(Intent(Intent.ACTION_VIEW, webUri))
+            }
         }
     }
 }
