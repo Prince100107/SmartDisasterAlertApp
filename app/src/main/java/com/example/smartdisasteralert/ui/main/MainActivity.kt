@@ -28,9 +28,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var preferences: AppPreferences
     private lateinit var locationHelper: LocationHelper
 
-    private val viewModel: MainViewModel by viewModels {
-        MainViewModelFactory(DisasterRepository(), AppPreferences(this))
-    }
+    private val viewModel: MainViewModel by viewModels()
 
     // Permission launcher for Location & Android 13+ Notifications
     private val permissionLauncher = registerForActivityResult(

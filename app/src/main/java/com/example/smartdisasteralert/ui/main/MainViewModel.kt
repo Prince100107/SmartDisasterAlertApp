@@ -1,8 +1,9 @@
 package com.example.smartdisasteralert.ui.main
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.smartdisasteralert.data.local.AppPreferences
 import com.example.smartdisasteralert.data.model.DisasterAlert
@@ -12,10 +13,10 @@ import com.example.smartdisasteralert.data.model.WeatherResponse
 import com.example.smartdisasteralert.data.repository.DisasterRepository
 import kotlinx.coroutines.launch
 
-class MainViewModel(
-    private val repository: DisasterRepository,
-    private val preferences: AppPreferences
-) : ViewModel() {
+class MainViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val repository: DisasterRepository = DisasterRepository()
+    private val preferences: AppPreferences = AppPreferences(application)
 
     private val _allAlerts = MutableLiveData<List<DisasterAlert>>(emptyList())
     val allAlerts: LiveData<List<DisasterAlert>> = _allAlerts
